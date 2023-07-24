@@ -79,7 +79,7 @@ const main = async () => {
 
     //Agregar Producto al archivo
     /* const id = await productos.save(
-        {title: 'Producto Random 1', price: 100}
+        {title: 'Producto Random 3', price: 800,thumbnail: 'urlrandom3'}
     )
     console.log('Objecto Guardado con ID:', id) */
     
@@ -88,7 +88,7 @@ const main = async () => {
      console.log("Objecto Obtenido", obj) */
 
      //Eliminar Producto
-     /* await productos.deleteById(2)
+     /* await productos.deleteById(1)
      console.log("Producto Eliminado") */
 
      //Obtener Todos los productos
