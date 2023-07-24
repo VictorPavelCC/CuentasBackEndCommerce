@@ -1,75 +1,100 @@
-class ProductManager{
-    constructor(){
-        this.products = []
-        this.nextID = 1
+const fs = require('fs');
+
+
+class Contenedor{
+    constructor(file){
+        this.file = file
     }
 
-
-    addProduct(product){
-        if(!this.isProductValid(product)){
-            console.error("Error: El producto no es Valido.")
-            return
-        }
-
-        if(this.isCodeDuplicate(product.code)){
-            console.log("Error: El codigo del Producto ya existe")
-            return
-        }
-
-        product.id= this.nextID++
-        this.products.push(product)
-    }
-
-    getProducts(){
-        return this.products
-    }
-
-    getProductById(id){
-        const product = this.products.find((p)=> p.id === id)
-        if(product){
-            return product
-        }else{
-            console.log("Error: Producto no encontrado")
+    async save(obj){
+        try{
+            const objects = await this.getAllObjects()
+            const lastId = objects.length > 0 ? objects[objects.length - 1].id : 0
+            const newId = lastId + 1
+            const newObj = {id: newId, ...obj}
+            objects.push(newObj)
+            await this.saveObjects(objects)
+            return newId
+        } catch(error) {
+            throw new Error('Error al guardar el Objeto')
         }
     }
 
-    isProductValid(product){
-        return(
-            product.title &&
-            product.description &&
-            product.price &&
-            product.thumbnail &&
-            product.code &&
-            product.stock !== undefined
-        )
+    async getById(id){
+        try{
+            const objects = await this.getAllObjects()
+            const obj = objects.find((o) => o.id === id)
+            return obj || null
+        } catch(error){
+            throw new Error('Error al obtener el ID')
+        }
     }
 
-    isCodeDuplicate(code){
-        return this.products.some((p) => p.code === code)
+    async getAll(){
+        try{
+            const objects = await this.getAllObjects()
+            return objects
+        } catch(error){
+            throw new Error('Error al obtener los objectos')
+        }
     }
+
+    async deleteById(id){
+        try{
+            let objects = await this.getAllObjects()
+            objects = objects.filter((o) => o.id !== id)
+            await this.saveObjects(objects)
+        }catch (error){
+            throw new Error('Error al eliminar los objectos')
+        }
+    }
+
+    async deleteAll(){
+        try{
+            await this.saveObjects([])
+        } catch(error){
+            throw new Error('Error al eliminar los Objetos')
+        }
+    }
+    async getAllObjects(){
+        try{
+            const data = await fs.promises.readFile(this.file,'utf-8')
+            return data ? JSON.parse(data) : []
+        }catch (error){
+            return []
+        }
+    }
+
+    async saveObjects(objects){
+        try{
+            await fs.promises.writeFile(this.file, JSON.stringify(objects, null, 2))
+        }catch (error){
+            throw new Error("Error al guardar Objetos")
+        }
+    }
+}
+
+const main = async () => {
+    const productos = new Contenedor("productos.txt")
+
+    //Agregar Producto al archivo
+    /* const id = await productos.save(
+        {title: 'Producto Random 1', price: 100}
+    )
+    console.log('Objecto Guardado con ID:', id) */
+    
+    //Obtener Producto por ID
+     /* const obj = await productos.getById(2)
+     console.log("Objecto Obtenido", obj) */
+
+     //Eliminar Producto
+     /* await productos.deleteById(2)
+     console.log("Producto Eliminado") */
+
+     //Obtener Todos los productos
+     const allObjects = await productos.getAll()
+     console.log('Objetos Guardados', allObjects)
 
 }
 
-const productManager = new ProductManager()
-
-productManager.addProduct({
-    title:"Producto 1",
-    description: "Descripcion Default 1",
-    price: 20,
-    thumbnail: "/Product1Image.png",
-    code: "PD01",
-    stock: 15
-})
-
-productManager.addProduct({
-    title:"Producto 2",
-    description: "Descripcion Default 2",
-    price: 40,
-    thumbnail: "/Product1Image.png",
-    code: "PD01",
-    stock: 25
-
-})
-
-
-const noProduct = productManager.getProductById(9)
+main().catch((error) => console.error(error))
