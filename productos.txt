@@ -16,5 +16,11 @@
     "title": "Producto Random 3",
     "price": 800,
     "thumbnail": "urlrandom3"
+  },
+  {
+    "id": 4,
+    "title": "Producto Random 4",
+    "price": 1200,
+    "thumbnail": "urlrandom4"
   }
 ]

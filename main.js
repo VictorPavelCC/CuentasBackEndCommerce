@@ -1,6 +1,4 @@
 const fs = require('fs');
-
-
 class Contenedor{
     constructor(file){
         this.file = file
@@ -29,7 +27,6 @@ class Contenedor{
             throw new Error('Error al obtener el ID')
         }
     }
-
     async getAll(){
         try{
             const objects = await this.getAllObjects()
@@ -76,10 +73,9 @@ class Contenedor{
 
 const main = async () => {
     const productos = new Contenedor("productos.txt")
-
     //Agregar Producto al archivo
     /* const id = await productos.save(
-        {title: 'Producto Random 3', price: 800,thumbnail: 'urlrandom3'}
+        {title: 'Producto Random 4', price: 1200,thumbnail: 'urlrandom4'}
     )
     console.log('Objecto Guardado con ID:', id) */
     
@@ -94,7 +90,7 @@ const main = async () => {
      //Obtener Todos los productos
      const allObjects = await productos.getAll()
      console.log('Objetos Guardados', allObjects)
-
-}
+     }
+     
 
 main().catch((error) => console.error(error))
