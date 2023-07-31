@@ -1,4 +1,5 @@
 const fs = require('fs');
+const express = require("express")
 class Contenedor{
     constructor(file){
         this.file = file
@@ -71,8 +72,9 @@ class Contenedor{
     }
 }
 
+const productos = new Contenedor("productos.txt")
 const main = async () => {
-    const productos = new Contenedor("productos.txt")
+    
     //Agregar Producto al archivo
     /* const id = await productos.save(
         {title: 'Producto Random 4', price: 1200,thumbnail: 'urlrandom4'}
@@ -88,9 +90,48 @@ const main = async () => {
      console.log("Producto Eliminado") */
 
      //Obtener Todos los productos
-     const allObjects = await productos.getAll()
-     console.log('Objetos Guardados', allObjects)
-     }
+     //const allObjects = await productos.getAll()
+     //console.log('Objetos Guardados', getallObjects)
+    }
      
 
-main().catch((error) => console.error(error))
+//main().catch((error) => console.error(error))
+
+
+
+const app = express()
+
+const PORT = 8080
+
+//Paths
+app.get("/productos", async (req,res)=> {
+    try {
+        const allProducts = await productos.getAll()
+        res.json(allProducts)
+    } catch (error){
+        res.status(500).json({ error: 'Error al obtener los productos' })
+    }
+    
+})
+
+app.get("/productoRandom", async (req,res)=> {
+    try {
+        const allProducts = await productos.getAll()
+        if(allProducts.length === 0){
+            return res.status(404).json({ error: 'No hay existencia de productos' });
+        }
+        const random = Math.floor(Math.random() * allProducts.length);
+        const randomProd = allProducts[random];
+        res.json(randomProd);
+
+    } catch {
+        res.status(500).json({ error: 'Error al obtener el producto Random' });
+    }
+    
+})
+
+
+const server = app.listen(PORT, () => {
+    console.log(`Escuchando en el puerto ${PORT}`)
+})
+server.on("error", error => console.log(`Error en servidor ${error}`))
