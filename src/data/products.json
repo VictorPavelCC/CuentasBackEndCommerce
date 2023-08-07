@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Smartphone Galaxy S21",
+    "description": "Un smartphone de alta gama con pantalla AMOLED y cámara de 108 MP",
+    "code": "GS21",
+    "price": 299,
+    "status": true,
+    "stock": 30,
+    "category": "Celular",
+    "thumbnails": [
+      "imagen1.jpg",
+      "img2.jpg",
+      "img3.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "IdeaPad 1",
+    "description": "Laptop intel etc",
+    "code": "LN02",
+    "price": 124000,
+    "status": true,
+    "stock": 12,
+    "category": "Laptop",
+    "thumbnails": [
+      "imagen1.jpg",
+      "img2.jpg",
+      "img3.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "SMART LED TV HITACHI 40 PULGADAS",
+    "description": "Tv Smart Andriod de 40 pulgadas FHD (1920x1080) ",
+    "code": "TS22",
+    "price": 107000,
+    "status": true,
+    "stock": 42,
+    "category": "TV",
+    "thumbnails": [
+      "img1.jpg",
+      "img2.jpg",
+      "img3.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "SMART LED TV ",
+    "description": "Tv Smart Andriod de 40 pulgadas FHD (1920x1080) ",
+    "code": "TS22",
+    "price": 1100,
+    "status": true,
+    "stock": 12,
+    "category": "TV",
+    "thumbnails": [
+      "img1.jpg",
+      "img2.jpg",
+      "img3.jpg"
+    ]
+  }
+]

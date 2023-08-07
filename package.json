@@ -2,9 +2,9 @@
   "name": "cuentasbackend",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon main.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
